@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		840EE6D61D5B5BD0009634F7 /* 2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 840EE6D51D5B5BD0009634F7 /* 2.jpeg */; };
-		841993801DE3340200DF2F0A /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8419937B1DE3340200DF2F0A /* UIView+Extension.m */; };
-		841993811DE3340200DF2F0A /* ZHImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8419937D1DE3340200DF2F0A /* ZHImagesView.m */; };
-		841993821DE3340200DF2F0A /* ZHImageVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 8419937F1DE3340200DF2F0A /* ZHImageVIew.m */; };
 		842C3F971D58C1BC009F4A77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C3F961D58C1BC009F4A77 /* main.m */; };
 		842C3F9A1D58C1BC009F4A77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C3F991D58C1BC009F4A77 /* AppDelegate.m */; };
 		842C3F9D1D58C1BC009F4A77 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C3F9C1D58C1BC009F4A77 /* ViewController.m */; };
@@ -19,6 +16,9 @@
 		842C3FA51D58C1BC009F4A77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842C3FA31D58C1BC009F4A77 /* LaunchScreen.storyboard */; };
 		842C3FB01D58C1BC009F4A77 /* ZHHandlePhotosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C3FAF1D58C1BC009F4A77 /* ZHHandlePhotosTests.m */; };
 		842C3FBB1D58C1BC009F4A77 /* ZHHandlePhotosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C3FBA1D58C1BC009F4A77 /* ZHHandlePhotosUITests.m */; };
+		8477578C1E35A24300C24CDA /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 847757871E35A24300C24CDA /* UIView+Extension.m */; };
+		8477578D1E35A24300C24CDA /* ZHImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847757891E35A24300C24CDA /* ZHImagesView.m */; };
+		8477578E1E35A24300C24CDA /* ZHImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8477578B1E35A24300C24CDA /* ZHImageView.m */; };
 		F000BD721D597AD7006BF7EA /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F000BD711D597AD7006BF7EA /* 1.jpg */; };
 		F031F16D1D5D7B93005E3209 /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F031F16A1D5D7B93005E3209 /* 4.jpg */; };
 		F031F16E1D5D7B93005E3209 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F031F16B1D5D7B93005E3209 /* 3.jpg */; };
@@ -44,12 +44,6 @@
 
 /* Begin PBXFileReference section */
 		840EE6D51D5B5BD0009634F7 /* 2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpeg; sourceTree = "<group>"; };
-		8419937A1DE3340200DF2F0A /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
-		8419937B1DE3340200DF2F0A /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
-		8419937C1DE3340200DF2F0A /* ZHImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHImagesView.h; sourceTree = "<group>"; };
-		8419937D1DE3340200DF2F0A /* ZHImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHImagesView.m; sourceTree = "<group>"; };
-		8419937E1DE3340200DF2F0A /* ZHImageVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHImageVIew.h; sourceTree = "<group>"; };
-		8419937F1DE3340200DF2F0A /* ZHImageVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHImageVIew.m; sourceTree = "<group>"; };
 		842C3F921D58C1BC009F4A77 /* ZHHandlePhotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZHHandlePhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		842C3F961D58C1BC009F4A77 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		842C3F981D58C1BC009F4A77 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -66,6 +60,12 @@
 		842C3FB61D58C1BC009F4A77 /* ZHHandlePhotosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZHHandlePhotosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		842C3FBA1D58C1BC009F4A77 /* ZHHandlePhotosUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHHandlePhotosUITests.m; sourceTree = "<group>"; };
 		842C3FBC1D58C1BC009F4A77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		847757861E35A24300C24CDA /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Extension.h"; path = "snipView/UIView+Extension.h"; sourceTree = "<group>"; };
+		847757871E35A24300C24CDA /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Extension.m"; path = "snipView/UIView+Extension.m"; sourceTree = "<group>"; };
+		847757881E35A24300C24CDA /* ZHImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZHImagesView.h; path = snipView/ZHImagesView.h; sourceTree = "<group>"; };
+		847757891E35A24300C24CDA /* ZHImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZHImagesView.m; path = snipView/ZHImagesView.m; sourceTree = "<group>"; };
+		8477578A1E35A24300C24CDA /* ZHImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZHImageView.h; path = snipView/ZHImageView.h; sourceTree = "<group>"; };
+		8477578B1E35A24300C24CDA /* ZHImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZHImageView.m; path = snipView/ZHImageView.m; sourceTree = "<group>"; };
 		F000BD711D597AD7006BF7EA /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		F031F16A1D5D7B93005E3209 /* 4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4.jpg; sourceTree = "<group>"; };
 		F031F16B1D5D7B93005E3209 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
@@ -97,19 +97,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		841993791DE3340200DF2F0A /* snipView */ = {
-			isa = PBXGroup;
-			children = (
-				8419937A1DE3340200DF2F0A /* UIView+Extension.h */,
-				8419937B1DE3340200DF2F0A /* UIView+Extension.m */,
-				8419937C1DE3340200DF2F0A /* ZHImagesView.h */,
-				8419937D1DE3340200DF2F0A /* ZHImagesView.m */,
-				8419937E1DE3340200DF2F0A /* ZHImageVIew.h */,
-				8419937F1DE3340200DF2F0A /* ZHImageVIew.m */,
-			);
-			path = snipView;
-			sourceTree = "<group>";
-		};
 		842C3F891D58C1BB009F4A77 = {
 			isa = PBXGroup;
 			children = (
@@ -133,7 +120,7 @@
 		842C3F941D58C1BC009F4A77 /* ZHHandlePhotos */ = {
 			isa = PBXGroup;
 			children = (
-				841993791DE3340200DF2F0A /* snipView */,
+				847757851E35A23300C24CDA /* snipView */,
 				842C3F981D58C1BC009F4A77 /* AppDelegate.h */,
 				842C3F991D58C1BC009F4A77 /* AppDelegate.m */,
 				842C3F9B1D58C1BC009F4A77 /* ViewController.h */,
@@ -176,6 +163,19 @@
 				842C3FBC1D58C1BC009F4A77 /* Info.plist */,
 			);
 			path = ZHHandlePhotosUITests;
+			sourceTree = "<group>";
+		};
+		847757851E35A23300C24CDA /* snipView */ = {
+			isa = PBXGroup;
+			children = (
+				847757861E35A24300C24CDA /* UIView+Extension.h */,
+				847757871E35A24300C24CDA /* UIView+Extension.m */,
+				847757881E35A24300C24CDA /* ZHImagesView.h */,
+				847757891E35A24300C24CDA /* ZHImagesView.m */,
+				8477578A1E35A24300C24CDA /* ZHImageView.h */,
+				8477578B1E35A24300C24CDA /* ZHImageView.m */,
+			);
+			name = snipView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,6 +246,7 @@
 				TargetAttributes = {
 					842C3F911D58C1BC009F4A77 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 3BBQ69D5B7;
 					};
 					842C3FAA1D58C1BC009F4A77 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -314,11 +315,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				841993811DE3340200DF2F0A /* ZHImagesView.m in Sources */,
+				8477578D1E35A24300C24CDA /* ZHImagesView.m in Sources */,
 				842C3F9D1D58C1BC009F4A77 /* ViewController.m in Sources */,
-				841993821DE3340200DF2F0A /* ZHImageVIew.m in Sources */,
+				8477578E1E35A24300C24CDA /* ZHImageView.m in Sources */,
 				842C3F9A1D58C1BC009F4A77 /* AppDelegate.m in Sources */,
-				841993801DE3340200DF2F0A /* UIView+Extension.m in Sources */,
+				8477578C1E35A24300C24CDA /* UIView+Extension.m in Sources */,
 				842C3F971D58C1BC009F4A77 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,6 +463,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3BBQ69D5B7;
 				INFOPLIST_FILE = ZHHandlePhotos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -474,6 +476,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3BBQ69D5B7;
 				INFOPLIST_FILE = ZHHandlePhotos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -55,8 +55,8 @@
         
         UIImage *image = self.images[i];
         
-        ZHImageVIew *imageView = [[ZHImageVIew alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width *i, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-        imageView.snipScale = self.snipScale;
+        ZHImageView *imageView = [[ZHImageView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width *i, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+        imageView.snipScale = self.snipScale > 1? 1:self.snipScale;
         imageView.image = image;
         imageView.tag = i;
         [self addSubview:imageView];

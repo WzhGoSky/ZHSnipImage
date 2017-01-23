@@ -10,7 +10,7 @@
 
 typedef void(^snipResult)(UIImage *image, NSInteger tag);
 
-@interface ZHImageVIew : UIView
+@interface ZHImageView : UIView
 
 //裁剪的比例
 @property (nonatomic, assign) CGFloat snipScale;

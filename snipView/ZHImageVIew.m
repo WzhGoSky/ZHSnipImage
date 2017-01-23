@@ -17,9 +17,13 @@ static CGFloat const borderWidth = 1;
 
 //展示的图片
 @property (nonatomic, weak) UIImageView *imageView;
-
 //裁剪按钮
-@property (nonatomic, weak) UIButton *snipButton;
+//@property (nonatomic, weak) UIButton *snipButton;
+@property (nonatomic, weak) UILabel *snipButton;
+
+@property (nonatomic, strong) UIButton *cancelButton;
+
+@property (nonatomic, strong) UIButton *doneButton;
 
 @property (nonatomic, weak) UIView *topOrLeftView;
 
@@ -40,22 +44,42 @@ static CGFloat const borderWidth = 1;
         [self addSubview:imageView];
         self.imageView = imageView;
         
-        UIButton *snipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UILabel *snipButton = [[UILabel alloc] init];
         snipButton.backgroundColor = [UIColor clearColor];
-        [snipButton addTarget:self action:@selector(snipButton:) forControlEvents:UIControlEventTouchUpInside];
-        [imageView addSubview:snipButton];
         snipButton.layer.borderColor = [UIColor whiteColor].CGColor;
         snipButton.layer.borderWidth = borderWidth;
-        
+        snipButton.userInteractionEnabled = YES;
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
-        
         //设置需要的最少，多的手指
         pan.minimumNumberOfTouches = 1;
         pan.maximumNumberOfTouches = 3;
         pan.delegate = self;
         //将手势添加到imageView
         [snipButton addGestureRecognizer:pan];
+        [imageView addSubview:snipButton];
         self.snipButton = snipButton;
+        
+        UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        cancelButton.titleLabel.font = [UIFont systemFontOfSize:15.f];
+        [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        cancelButton.layer.cornerRadius = 8;
+        cancelButton.layer.masksToBounds = YES;
+        [cancelButton setBackgroundColor:kThemeColor];
+        [cancelButton addTarget:self action:@selector(cancle:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:cancelButton];
+        self.cancelButton = cancelButton;
+        [self bringSubviewToFront:self.cancelButton];
+        
+        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        doneButton.titleLabel.font = [UIFont systemFontOfSize:15.f];
+        [doneButton setTitle:@"确定" forState:UIControlStateNormal];
+        doneButton.layer.cornerRadius = 8;
+        doneButton.layer.masksToBounds = YES;
+        [doneButton setBackgroundColor:kThemeColor];
+        [doneButton addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:doneButton];
+        self.doneButton = doneButton;
+        [self bringSubviewToFront:self.doneButton];
         
         //上侧阴影
         UIView *topOrLeftView = [[UIView alloc] init];
@@ -68,6 +92,8 @@ static CGFloat const borderWidth = 1;
         bottomOrRightView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
         [self.imageView addSubview:bottomOrRightView];
         self.bottomOrRightView = bottomOrRightView;
+        
+        self.snipButton.frame = CGRectMake(0, 0, 0, 0);
     }
     
     return self;
@@ -95,7 +121,9 @@ static CGFloat const borderWidth = 1;
     
     self.imageView.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - width)/2, (self.height - height)/2, width, height);
     
-    self.snipButton.center = CGPointMake(self.imageView.width/2, self.imageView.height/2);
+    self.cancelButton.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width/2 - 110)/2, [UIScreen mainScreen].bounds.size.height-55, 110, 35);
+    
+    self.doneButton.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width/2 - 110)/2 + [UIScreen mainScreen].bounds.size.width/2, [UIScreen mainScreen].bounds.size.height-55, 110, 35);
     
     if (width < height) { //竖
         
@@ -139,7 +167,12 @@ static CGFloat const borderWidth = 1;
 
 
 #pragma mark --------------------------ZHSnipButtonDelegate-----------------------------------------
-- (void)snipButton:(UIButton *)button
+- (void)cancle:(UIButton *)button
+{
+    [self.superview removeFromSuperview];
+}
+
+- (void)done:(UIButton *)button
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否确定截图" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alertView show];

@@ -7,19 +7,22 @@
 //
 
 
-#import "ZHImageVIew.h"
+#import "ZHImageView.h"
 #import "UIView+Extension.h"
 
 //边框宽度
 static CGFloat const borderWidth = 1;
 
-@interface ZHImageVIew()<UIGestureRecognizerDelegate, UIAlertViewDelegate>
+@interface ZHImageView()<UIGestureRecognizerDelegate, UIAlertViewDelegate>
 
 //展示的图片
 @property (nonatomic, weak) UIImageView *imageView;
-
 //裁剪按钮
-@property (nonatomic, weak) UIButton *snipButton;
+@property (nonatomic, weak) UIView *snipView;
+
+@property (nonatomic, strong) UIButton *cancelButton;
+
+@property (nonatomic, strong) UIButton *doneButton;
 
 @property (nonatomic, weak) UIView *topOrLeftView;
 
@@ -27,7 +30,7 @@ static CGFloat const borderWidth = 1;
 
 @end
 
-@implementation ZHImageVIew
+@implementation ZHImageView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -40,22 +43,42 @@ static CGFloat const borderWidth = 1;
         [self addSubview:imageView];
         self.imageView = imageView;
         
-        UIButton *snipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        snipButton.backgroundColor = [UIColor clearColor];
-        [snipButton addTarget:self action:@selector(snipButton:) forControlEvents:UIControlEventTouchUpInside];
-        [imageView addSubview:snipButton];
-        snipButton.layer.borderColor = [UIColor whiteColor].CGColor;
-        snipButton.layer.borderWidth = borderWidth;
-        
+        UIView *snipView = [[UIView alloc] init];
+        snipView.backgroundColor = [UIColor clearColor];
+        snipView.layer.borderColor = [UIColor whiteColor].CGColor;
+        snipView.layer.borderWidth = borderWidth;
+        snipView.userInteractionEnabled = YES;
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
-        
         //设置需要的最少，多的手指
         pan.minimumNumberOfTouches = 1;
         pan.maximumNumberOfTouches = 3;
         pan.delegate = self;
         //将手势添加到imageView
-        [snipButton addGestureRecognizer:pan];
-        self.snipButton = snipButton;
+        [snipView addGestureRecognizer:pan];
+        [imageView addSubview:snipView];
+        self.snipView = snipView;
+        
+        UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        cancelButton.titleLabel.font = [UIFont systemFontOfSize:15.f];
+        [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        cancelButton.layer.cornerRadius = 8;
+        cancelButton.layer.masksToBounds = YES;
+        [cancelButton setBackgroundColor:[UIColor colorWithRed:153/255.0 green:127/255.0 blue:0 alpha:1]];
+        [cancelButton addTarget:self action:@selector(cancle:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:cancelButton];
+        self.cancelButton = cancelButton;
+        [self bringSubviewToFront:self.cancelButton];
+        
+        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        doneButton.titleLabel.font = [UIFont systemFontOfSize:15.f];
+        [doneButton setTitle:@"确定" forState:UIControlStateNormal];
+        doneButton.layer.cornerRadius = 8;
+        doneButton.layer.masksToBounds = YES;
+        [doneButton setBackgroundColor:[UIColor colorWithRed:153/255.0 green:127/255.0 blue:0 alpha:1]];
+        [doneButton addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:doneButton];
+        self.doneButton = doneButton;
+        [self bringSubviewToFront:self.doneButton];
         
         //上侧阴影
         UIView *topOrLeftView = [[UIView alloc] init];
@@ -68,6 +91,8 @@ static CGFloat const borderWidth = 1;
         bottomOrRightView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
         [self.imageView addSubview:bottomOrRightView];
         self.bottomOrRightView = bottomOrRightView;
+        
+        self.snipView.frame = CGRectMake(0, 0, 0, 0);
     }
     
     return self;
@@ -76,14 +101,14 @@ static CGFloat const borderWidth = 1;
 - (void)setImage:(UIImage *)image
 {
     //1.压缩图片
-    _image = [ZHImageVIew image:image ByScale:([UIScreen mainScreen].bounds.size.width * [UIScreen mainScreen].scale) / image.size.width];
+    _image = [ZHImageView image:image ByScale:([UIScreen mainScreen].bounds.size.width * [UIScreen mainScreen].scale) / image.size.width];
     self.imageView.image = _image;
 
     //2.设置裁剪的尺寸
     [self setUpSnipSizeWithImage:_image];
     
-    //3.设定snipButton尺寸
-    self.snipButton.size = CGSizeMake(self.snipSize.width, self.snipSize.height);
+    //3.设定snipView尺寸
+    self.snipView.size = CGSizeMake(self.snipSize.width, self.snipSize.height);
 }
 
 - (void)layoutSubviews
@@ -95,16 +120,18 @@ static CGFloat const borderWidth = 1;
     
     self.imageView.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - width)/2, (self.height - height)/2, width, height);
     
-    self.snipButton.center = CGPointMake(self.imageView.width/2, self.imageView.height/2);
+    self.cancelButton.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width/2 - 110)/2, [UIScreen mainScreen].bounds.size.height-55, 110, 35);
+    
+    self.doneButton.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width/2 - 110)/2 + [UIScreen mainScreen].bounds.size.width/2, [UIScreen mainScreen].bounds.size.height-55, 110, 35);
     
     if (width < height) { //竖
         
-        self.topOrLeftView.frame = CGRectMake(0, CGRectGetMinY(self.snipButton.frame) - self.topOrLeftView.height,self.topOrLeftView.width, self.topOrLeftView.height);
-        self.bottomOrRightView.frame = CGRectMake(0, CGRectGetMaxY(self.snipButton.frame), self.bottomOrRightView.width,self.bottomOrRightView.height);
+        self.topOrLeftView.frame = CGRectMake(0, CGRectGetMinY(self.snipView.frame) - self.topOrLeftView.height,self.topOrLeftView.width, self.topOrLeftView.height);
+        self.bottomOrRightView.frame = CGRectMake(0, CGRectGetMaxY(self.snipView.frame), self.bottomOrRightView.width,self.bottomOrRightView.height);
     }else //横
     {
-        self.topOrLeftView.frame = CGRectMake(CGRectGetMinX(self.snipButton.frame) - self.topOrLeftView.width, 0,self.topOrLeftView.width, self.topOrLeftView.height);
-        self.bottomOrRightView.frame = CGRectMake(CGRectGetMaxX(self.snipButton.frame), 0, self.bottomOrRightView.width,self.bottomOrRightView.height);
+        self.topOrLeftView.frame = CGRectMake(CGRectGetMinX(self.snipView.frame) - self.topOrLeftView.width, 0,self.topOrLeftView.width, self.topOrLeftView.height);
+        self.bottomOrRightView.frame = CGRectMake(CGRectGetMaxX(self.snipView.frame), 0, self.bottomOrRightView.width,self.bottomOrRightView.height);
     }
 }
 
@@ -116,7 +143,7 @@ static CGFloat const borderWidth = 1;
         
         if (image.size.width >= image.size.height) { //横照片
             
-            self.snipSize = CGSizeMake(1/self.snipScale * height, height);
+            self.snipSize = CGSizeMake(1/((self.snipScale)) * height, height);
             
             self.topOrLeftView.width = [UIScreen mainScreen].bounds.size.width;
             self.topOrLeftView.height = self.snipSize.height;
@@ -126,7 +153,7 @@ static CGFloat const borderWidth = 1;
             
         }else //竖照片
         {
-            self.snipSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.snipScale * [UIScreen mainScreen].bounds.size.width);
+            self.snipSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, (self.snipScale) * [UIScreen mainScreen].bounds.size.width);
             
             self.topOrLeftView.width = self.snipSize.width;
             self.topOrLeftView.height = [UIScreen mainScreen].bounds.size.height;
@@ -138,8 +165,13 @@ static CGFloat const borderWidth = 1;
 }
 
 
-#pragma mark --------------------------ZHSnipButtonDelegate-----------------------------------------
-- (void)snipButton:(UIButton *)button
+#pragma mark --------------------------ZHsnipViewDelegate-----------------------------------------
+- (void)cancle:(UIButton *)button
+{
+    [self.superview removeFromSuperview];
+}
+
+- (void)done:(UIButton *)button
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否确定截图" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alertView show];
@@ -157,11 +189,11 @@ static CGFloat const borderWidth = 1;
         
         if (width <= height) { //竖照片
             
-            image = [ZHImageVIew imageFromView:self.imageView atFrame:CGRectMake(0, (self.snipButton.y + borderWidth) * [UIScreen mainScreen].scale ,(self.snipButton.width - borderWidth * 2) * [UIScreen mainScreen].scale, (self.snipButton.height - borderWidth * 2) *[UIScreen mainScreen].scale)];
+            image = [ZHImageView imageFromView:self.imageView atFrame:CGRectMake(0, (self.snipView.y + borderWidth) * [UIScreen mainScreen].scale ,(self.snipView.width - borderWidth * 2) * [UIScreen mainScreen].scale, (self.snipView.height - borderWidth * 2) *[UIScreen mainScreen].scale)];
             
         }else
         {
-            image = [ZHImageVIew imageFromView:self.imageView atFrame:CGRectMake((self.snipButton.x + borderWidth) * [UIScreen mainScreen].scale, 0 , (self.snipButton.width - borderWidth * 2)* [UIScreen mainScreen].scale, (self.snipButton.height - borderWidth * 2) * [UIScreen mainScreen].scale)];
+            image = [ZHImageView imageFromView:self.imageView atFrame:CGRectMake((self.snipView.x + borderWidth) * [UIScreen mainScreen].scale, 0 , (self.snipView.width - borderWidth * 2)* [UIScreen mainScreen].scale, (self.snipView.height - borderWidth * 2) * [UIScreen mainScreen].scale)];
   
         }
         
@@ -202,7 +234,7 @@ static CGFloat const borderWidth = 1;
             bottomOrRightViewC.x +=0;
             bottomOrRightViewC.y +=pt.y;
             
-            CGFloat halfSnipHeight = 0.5 * self.snipButton.height;
+            CGFloat halfSnipHeight = 0.5 * self.snipView.height;
             CGFloat y = c.y - halfSnipHeight;
             
             if (y < 0) {//靠上
@@ -230,7 +262,7 @@ static CGFloat const borderWidth = 1;
             bottomOrRightViewC.x +=pt.x;
             bottomOrRightViewC.y +=0;
             
-            CGFloat halfSnipWidth = 0.5 * self.snipButton.width;
+            CGFloat halfSnipWidth = 0.5 * self.snipView.width;
             CGFloat x = c.x - halfSnipWidth;
             
             if (x < 0) {//靠左
